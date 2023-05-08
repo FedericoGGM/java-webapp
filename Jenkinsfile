@@ -16,19 +16,16 @@ pipeline {
             }
         }
 
-        stage ('Deploy to tomcat container') {
+        
+        stage ('Build') {
             steps {
-                sh 'docker exec tomcat /usr/local/tomcat/bin/shutdown.sh'
-                sh 'docker cp /var/jenkins_home/workspace/webapp-cicd/target/WebApp.war tomcat:/usr/local/tomcat/webapps/'
-                sh 'docker exec tomcat /usr/local/tomcat/bin/startup.sh'
-
-            }
-        }
-
-        // stage ('Build') {
-        //     steps {
-        //         sh 'mvn clean package'
-        //     }
-        // }
+                sh 'mvn clean package'
+       }
+    }
+        
+        stage ('deploy to tomcat') {
+            steps {
+              sh 'cp /var/jenkins_home/workspace/webapp-cicd/target/*.war /usr/local/tomcat/webapps/webapp.war'
+       }
     }
 }
