@@ -39,10 +39,20 @@ pipeline {
                         script: 'ls /var/jenkins_home/workspace/webapp-cicd/target/*.war',
                         returnStdout: true
                     ).trim()
-                    sh "cp $warFile /usr/local/tomcat/webapps/${JOB_NAME}.war"
+                    // sh "cp $warFile /usr/local/tomcat/webapps/${JOB_NAME}.war"
+                    sh "cp $warFile /usr/local/tomcat/webapps/Webapp.war"
                 }
             }
         }
+
+        stage () {
+            steps {
+                asd 
+
+            }
+
+        }
+
 
     } //  stages 
    
