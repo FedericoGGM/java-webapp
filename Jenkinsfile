@@ -26,7 +26,6 @@ pipeline {
 
         stage('Change permissions') {
             steps {
-                sh 'chown -R 1000:1000 /usr/local/tomcat/webapps'
                 sh 'cp /var/jenkins_home/workspace/webapp-cicd/target/*.war /usr/local/tomcat/webapps/'
                 sh 'chmod +x /usr/local/tomcat/webapps/*.war'
                 sh 'ls -l /usr/local/tomcat/webapps/*.war'
