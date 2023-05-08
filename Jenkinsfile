@@ -45,13 +45,13 @@ pipeline {
             }
         }
 
-        stage () {
-            steps {
-                asd 
+        // stage () {
+        //     steps {
+        //         asd 
 
-            }
+        //     }
 
-        }
+        // }
 
 
     } //  stages 
