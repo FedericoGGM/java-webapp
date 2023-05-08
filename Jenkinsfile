@@ -4,6 +4,7 @@ pipeline {
 
     tools {
         maven 'Maven'
+        docker 'Docker'
     }
 
     stages {
@@ -45,14 +46,10 @@ pipeline {
             }
         }
 
+
         stage ('Check-Git-Secrets') {
-            agent {
-                docker {
-                    image 'gesellix/trufflehog'
-                }
-            }
             steps {
-               sh 'trufflehog --json https://github.com/joaco-sy/java-webapp.git > trufflehog_output'
+               sh 'docker run gesellix/trufflehog --json https://github.com/joaco-sy/java-webapp.git > trufflehog_output'
                sh 'cat trufflehog_output'
             }
         }
