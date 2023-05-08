@@ -2,9 +2,8 @@ pipeline {
     tools {
         maven 'Maven'
     }
-    agents any
     stages {
-        stage ('Inicio') {
+        stage ('start') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
