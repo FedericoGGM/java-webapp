@@ -45,6 +45,13 @@ pipeline {
             }
         }
 
+        stage ('Check-Git-Secrets') {
+             steps {
+                sh 'docker-compose run trufflehog'
+                sh 'cat trufflehog_output'
+            }
+        }
+
         // stage () {
         //     steps {
         //         asd 
