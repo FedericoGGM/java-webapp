@@ -46,9 +46,14 @@ pipeline {
         }
 
         stage ('Check-Git-Secrets') {
-             steps {
-                sh 'docker-compose run trufflehog'
-                sh 'cat trufflehog_output'
+            agent {
+                docker {
+                    image 'gesellix/trufflehog'
+                }
+            }
+            steps {
+               sh 'trufflehog --json https://github.com/joaco-sy/java-webapp.git > trufflehog_output'
+               sh 'cat trufflehog_output'
             }
         }
 
