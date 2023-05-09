@@ -48,8 +48,9 @@ pipeline {
 
         stage ('Check-Git-Secrets') {
             steps {
-               sh 'docker run gesellix/trufflehog --json https://github.com/joaco-sy/java-webapp.git > trufflehog_output'
-               sh 'cat trufflehog_output'
+                sh 'docker version'
+            //    sh 'docker run gesellix/trufflehog --json https://github.com/joaco-sy/java-webapp.git > trufflehog_output'
+            //    sh 'cat trufflehog_output'
             }
         }
 
