@@ -49,7 +49,7 @@ pipeline {
         stage ('Check-Git-Secrets') {
             steps {
                sh 'docker version'
-               sh 'docker run --rm -it -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> trufflehog_output'
+               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> trufflehog_output'
                sh 'cat trufflehog_output'
             }
         }
