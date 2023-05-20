@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage ('start') {sta
+        stage ('start') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
@@ -24,26 +24,26 @@ pipeline {
         }
         
 
-    //     stage('Change permissions') {
-    //         steps {
-    //             sh 'cp /var/jenkins_home/workspace/webapp-cicd/target/*.war /usr/local/tomcat/webapps/'
-    //             sh 'chmod +x /usr/local/tomcat/webapps/*.war'
-    //             sh 'ls -l /usr/local/tomcat/webapps/*.war'
-    //         }
-    //     }
+        //     stage('Change permissions') {
+        //         steps {
+        //             sh 'cp /var/jenkins_home/workspace/webapp-cicd/target/*.war /usr/local/tomcat/webapps/'
+        //             sh 'chmod +x /usr/local/tomcat/webapps/*.war'
+        //             sh 'ls -l /usr/local/tomcat/webapps/*.war'
+        //         }
+        //     }
 
-    //     stage ('deploy to tomcat') {
-    //         steps {
-    //             script {
-    //                 def warFile = sh(
-    //                     script: 'ls /var/jenkins_home/workspace/webapp-cicd/target/*.war',
-    //                     returnStdout: true
-    //                 ).trim()
-    //                 // sh "cp $warFile /usr/local/tomcat/webapps/${JOB_NAME}.war"
-    //                 sh "cp $warFile /usr/local/tomcat/webapps/Webapp.war"
-    //             }
-    //         }
-        }
+        //     stage ('deploy to tomcat') {
+        //         steps {
+        //             script {
+        //                 def warFile = sh(
+        //                     script: 'ls /var/jenkins_home/workspace/webapp-cicd/target/*.war',
+        //                     returnStdout: true
+        //                 ).trim()
+        //                 // sh "cp $warFile /usr/local/tomcat/webapps/${JOB_NAME}.war"
+        //                 sh "cp $warFile /usr/local/tomcat/webapps/Webapp.war"
+        //             }
+        //         }
+        
 
 
         stage ('Check-Git-Secrets') {
