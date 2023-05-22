@@ -16,19 +16,12 @@ pipeline {
             }
         }
 
-        
-        stage ('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
 
         stage ('Check-Git-Secrets') {
             steps {
-               sh 'docker version'
-               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> trufflehog_output.txt'
-               sh 'cat trufflehog_output'
+               sh 'rm /tmp/trufflehog_output || true'
+               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> /tmp/trufflehog_output'
+               sh 'cat /tmp/trufflehog_output'
             }
         }
 
@@ -40,6 +33,12 @@ pipeline {
              sh 'chmod +x owasp-dependency-check.sh'
              sh 'bash owasp-dependency-check.sh'
              sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+            }
+        }
+        
+        stage ('Build') {
+            steps {
+                sh 'mvn clean package'
             }
         }
 
