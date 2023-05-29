@@ -19,9 +19,7 @@ pipeline {
 
         stage ('Check-Git-Secrets') {
             steps {
-               sh 'rm /test/trufflehog_output || true'
-               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> /test/trufflehog_output'
-               sh 'cat /jenkins/trufflehog_output'
+               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json'
             }
         }      
        
