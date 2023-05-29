@@ -19,23 +19,11 @@ pipeline {
 
         stage ('Check-Git-Secrets') {
             steps {
-               sh 'rm /tmp/trufflehog_output || true'
-               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> /tmp/trufflehog_output'
-               sh 'cat /tmp/trufflehog_output'
+               sh 'rm /jenkins/trufflehog_output || true'
+               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json >> /jenkins/trufflehog_output'
+               sh 'cat /jenkins/trufflehog_output'
             }
-        }
-
-    
-        // stage ('Source Composition Analysis') {
-        //   steps {
-        //      sh 'rm owasp* || true'
-        //      sh 'wget "https://raw.githubusercontent.com/joaco-sy/java-webapp/main/owasp-dependency-check.sh" '
-        //      sh 'chmod +x owasp-dependency-check.sh'
-        //      sh 'bash owasp-dependency-check.sh'
-        //      sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
-        //     }
-        // }
-        
+        }      
        
         stage ('OWASP Dependency-Check Vulnerabilities') {
             steps {
@@ -43,15 +31,34 @@ pipeline {
                     -o "./" 
                     -s "./"
                     -f "ALL" 
-                    --prettyPrint''', odcInstallation: 'OWASP-DC'
+                    --prettyPrint''', odcInstallation: 'Dependency-owasp'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }     
         }
+
+    
+        // stage ('SAST') {
+        //     steps {
+        //     withSonarQubeEnv('sonar') {
+        //         sh 'mvn sonar:sonar'
+        //         sh 'cat target/sonar/report-task.txt'
+        //        }
+        //     }
+        // }
+
 
         stage ('Build') {
             steps {
                 sh 'mvn clean package'
             }
+        }
+
+        stage ('Deploy-To-Tomcat') {
+           steps {
+           sshagent(['tomcat']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.war root@192.168.203.4:/opt/apache-tomcat-10.1.9/webapps/webapp.war'
+                }      
+            }       
         }
 
 
