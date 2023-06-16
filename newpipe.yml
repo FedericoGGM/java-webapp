@@ -5,14 +5,7 @@ pipeline {
 
 
     stages {
-        stage ('start') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-        }
+        
 
 
         stage ('Check-Git-Secrets') {
@@ -41,12 +34,7 @@ pipeline {
             }
         }
 
-        stage ('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
+        
         
         
         stage ('DAST') {
