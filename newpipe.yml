@@ -35,14 +35,7 @@ pipeline {
         }
 
     
-        stage ('SAST') {
-            steps {
-            withSonarQubeEnv('sonar') {
-                sh 'mvn sonar:sonar'
-                sh 'cat target/sonar/report-task.txt'
-               }
-            }
-        }
+       
 
         stage('Vulnerability Scan - Docker ') {
               steps {
@@ -56,13 +49,7 @@ pipeline {
             }
         }
 
-        stage ('Deploy-To-Tomcat') {
-           steps {
-           sshagent(['good']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war root@192.168.203.4:/opt/apache-tomcat-10.1.9/webapps/webapp.war'
-                }      
-            }       
-        }
+        
         
         stage ('DAST') {
             steps {
