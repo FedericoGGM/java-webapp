@@ -1,0 +1,47 @@
+pipeline {
+
+    agent any
+
+
+
+    stages {
+        
+
+
+        stage ('Check-Git-Secrets') {
+            steps {
+               sh 'docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/joaco-sy/java-webapp.git --json'
+            }
+        }      
+       
+        stage ('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', odcInstallation: 'Dependency-owasp'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }     
+        }
+
+    
+       
+
+        stage('Build Image ') {
+              steps {
+                sh '''
+                docker build -t 172.17.0.1:5000/apiflask .
+                docker push 172.17.0.1./apiflask
+                
+                
+                '''
+            }
+        }
+
+        
+       
+
+    } 
+   
+} 
