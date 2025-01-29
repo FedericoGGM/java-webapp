@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:alpine3.21
 ADD helloworld.py /
 RUN pip install flask
 RUN pip install flask_restful
