@@ -10,13 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your source code if needed
-                echo 'Checking out source code...'
-                git 'https://github.com/FedericoGGM/java-webapp'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
